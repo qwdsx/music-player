@@ -2,10 +2,6 @@
 
 # (WIP) A music player written in Angular and Rust
 
-### Preview
-![preview](./assets/preview.png)
-
-
 ## env files
 Environment files should look like this:
 <br>
@@ -20,3 +16,6 @@ Backend: file called .env in the root of backend
 ROCKET_ADDRESS="<server address>" // most likely localhost (e.g., "127.0.0.1"), port is automatically assigned by rocket
 MUSIC_FOLDER="<folder containing songs>"
 ```
+
+### Preview
+![preview](./assets/preview.png)
