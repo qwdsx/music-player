@@ -17,6 +17,6 @@ export const env = {
 ```
 Backend: file called .env in the root of backend
 ```console
-ROCKET_ADDRESS="<server address>" // most likely localhost, port is automatically assigned by rocket
+ROCKET_ADDRESS="<server address>" // most likely localhost (e.g., "127.0.0.1"), port is automatically assigned by rocket
 MUSIC_FOLDER="<folder containing songs>"
 ```
