@@ -1,0 +1,12 @@
+
+
+@keyframes scroll {
+    0% { tranform: translateX(0%) }
+    100% { transform: translateX(-100%); }
+}
+
+.text-scroll {
+    width: auto;
+    white-space: nowrap;
+    animation: scroll 5s linear infinite;
+}
