@@ -125,7 +125,7 @@ export class AppComponent implements OnInit {
     this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
     this.audio.addEventListener('ended', this.next.bind(this));
     this.audio.addEventListener('error', () => {
-      this.isPlaying = true;
+      this.isPlaying = false;
     });
   }
 
