@@ -8,12 +8,12 @@ Environment files should look like this:
 Frontend: create a file called 'env.ts' in the folder "front/src/environments/"
 ```ts
 export const env = {
-    apiUrl: "<api url>" // Backend url, most likely localhost
+    apiUrl: "<api url>" // Backend url
 }
 ```
 Backend: file called .env in the root of backend
 ```console
-ROCKET_ADDRESS="<server address>" // most likely localhost (e.g., "127.0.0.1"), port is automatically assigned by rocket
+ROCKET_ADDRESS="<server address>" // most likely localhost (e.g.,'127.0.0.1'), excluding 'http://' and port
 MUSIC_FOLDER="<folder containing songs>"
 ```
 
