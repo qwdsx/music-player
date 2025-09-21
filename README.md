@@ -18,7 +18,9 @@ MUSIC_FOLDER="<folder containing songs>"
 ```
 
 ### Preview
-<img src="./assets/preview.png" width="150px" />
-<img src="./assets/preview2.png" width="150px" />
-<img src="./assets/preview3.png" width="150px" />
+<div float="left">
+    <img src="./assets/preview.png" width="150px" />
+    <img src="./assets/preview2.png" width="150px" />
+    <img src="./assets/preview3.png" width="150px" />
+</div>
 
