@@ -20,3 +20,4 @@ MUSIC_FOLDER="<folder containing songs>"
 ### Preview
 ![preview](./assets/preview.png)
 ![preview2](./assets/preview2.png)
+![preview3](./assets/preview3.png)
