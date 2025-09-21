@@ -10,13 +10,20 @@ import {
   faShuffle,
   faBars,
   faCaretDown,
-  faCaretUp
+  faCaretUp,
+  faMusic
 } from '@fortawesome/free-solid-svg-icons';
 import { NgIf, NgClass } from '@angular/common';
+import { ProgressBarComponent } from "./components/progress-bar/progress-bar.component";
 
 @Component({
   selector: 'app-root',
-  imports: [FontAwesomeModule, NgIf, NgClass],
+  imports: [
+    FontAwesomeModule,
+    NgIf,
+    NgClass,
+    ProgressBarComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -39,6 +46,7 @@ export class AppComponent implements OnInit {
   faBars = faBars;
   faCaretDown = faCaretDown;
   faCaretUp = faCaretUp;
+  faMusic = faMusic;
 
   isCurrentSongOpen = false;
   search = signal("");
@@ -58,6 +66,7 @@ export class AppComponent implements OnInit {
 
   initialize() {
     this.audio?.pause();
+    this._currentSong.set(this.songs[this.currentSongIndex()]);
     this.audio = new Audio(this._currentSong()?.url);
     this.audio.volume = 0.1;
   }
@@ -89,6 +98,8 @@ export class AppComponent implements OnInit {
 
   handleSongSelect(song: Song) {
     this._currentSong.set(song);
+    let index = this.songs.indexOf(this._currentSong()!);
+    this.currentSongIndex.set(index);
     this.loadSong();
     this.audio.volume = 0.1;
     this.audio?.play();
@@ -99,9 +110,9 @@ export class AppComponent implements OnInit {
     if (!this.audio) return;
     const duration = this.audio.duration || 1;
     const currentTime = this.audio.currentTime;
-    this.progress.set((currentTime / duration) * 100);
-    this.currentTime.set(currentTime);
     this.duration.set(duration);
+    this.currentTime.set(currentTime);
+    this.progress.set(currentTime / duration);
   }
 
   handleIndexChange(i: number): number {
@@ -110,15 +121,26 @@ export class AppComponent implements OnInit {
 
   next() {
     this.currentSongIndex.update(
-      prev => this.handleIndexChange(prev)
+      prev => (prev + 1 >= this.songs.length) ? 0 : prev + 1
     );
-    this.loadSong();
+    this._currentSong.set(this.songs[this.currentSongIndex()]);
     this.isPlaying = true;
+    this.loadSong();
+    this.audio?.play();
+  }
+
+  previous() {
+    this.currentSongIndex.update(
+      prev => (prev - 1 <= 0) ? this.songs.length - 1 : prev - 1
+    );
+    this._currentSong.set(this.songs[this.currentSongIndex()]);
+    this.isPlaying = true;
+    this.loadSong();
     this.audio?.play();
   }
 
   loadSong() {
-    let url = this._currentSong()?.url;
+    let url = this.songs[this.currentSongIndex()].url;
     this.audio.src = url!;
 
     // Add existing event listeners

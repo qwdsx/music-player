@@ -1,12 +1,21 @@
 
 
-@keyframes scroll {
-    0% { tranform: translateX(0%) }
-    100% { transform: translateX(-100%); }
-}
+// @keyframes scroll {
+//     0% { transform: translateX(0%) }
+//     100% { transform: translateX(-100%); }
+// }
 
-.text-scroll {
-    width: auto;
-    white-space: nowrap;
-    animation: scroll 5s linear infinite;
-}
+// .text-scroll {
+//     width: auto;
+//     white-space: nowrap;
+//     animation: scroll 5s linear infinite;
+// }
+
+// @keyframes blink {
+//     0% { display: none }
+//     100% {display: block }
+// }
+
+// .search-blink {
+//     animation: blink 1s linear infinite;
+// }
