@@ -18,6 +18,7 @@ MUSIC_FOLDER="<folder containing songs>"
 ```
 
 ### Preview
-![preview](./assets/preview.png)
-![preview2](./assets/preview2.png)
-![preview3](./assets/preview3.png)
+<img src="./assets/preview.png" width="150px" />
+<img src="./assets/preview2.png" width="150px" />
+<img src="./assets/preview3.png" width="150px" />
+
