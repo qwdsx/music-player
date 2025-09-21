@@ -23,6 +23,7 @@
     <div *ngIf="!isCurrentSongOpen" class="min-h-screen overflow-x-hidden overflow-y-scroll text-nowrap bg-black">
         @for (song of getSongsSearched; track $index) {
             <div
+                [ngClass]="(song.id == getCurrentSong?.id) ? 'bg-stone-950' : ''"
                 class="flex flex-col gap-1 p-3 border-b border-stone-700 last:border-0"
                 (click)="handleSongSelect(song)"
             >
@@ -63,6 +64,9 @@
         </div>
 
         <div *ngIf="!isCurrentSongOpen" class="z-1 overflow-hidden">
+            <p *ngIf="getCurrentSong.tags" class="text-stone-600 text-xs">
+                {{ getCurrentSong.tags.artist }}
+            </p>
             <p class="text-md">
                 {{ getCurrentSong.title }}
             </p>
@@ -101,11 +105,18 @@
                 />
             }
         </div>
-        <div *ngIf="isCurrentSongOpen" class="flex flex-col gap-6 items-center justify-center bg-black w-full h-screen fixed top-0">
+        <div *ngIf="isCurrentSongOpen && getCurrentSong" class="flex flex-col gap-4 items-center justify-center bg-black w-full h-screen fixed top-0">
             <div class="text-8xl text-white border rounded-xl border-stone-400 p-20">
                 <fa-icon [icon]="faMusic" />
             </div>
-            <h1 class="text-gray-400 text-md">{{ getCurrentSong?.title }}</h1>
+            <div class="flex flex-col gap-1 justify-center items-center">
+                <p class="text-md text-gray-400">
+                    {{ getCurrentSong.title }}
+                </p>
+                <p *ngIf="getCurrentSong.tags" class="text-stone-600 text-xs">
+                    {{ getCurrentSong.tags.artist }}
+                </p>
+            </div>
             <!-- Current song controls -->
             <div class="w-full flex flex-col px-8 gap-4">
                 <app-progress-bar
