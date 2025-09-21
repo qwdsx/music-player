@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+audiotags = "0.5.0"
 dotenv = "0.15.0"
 rocket = { version = "0.5.1", features = ["json"] }
 rocket_cors = "0.6.0"

@@ -3,13 +3,22 @@ use std::env;
 use rocket::serde::json::Json;
 use serde::Serialize;
 use walkdir::WalkDir;
+use audiotags::{Tag, Picture, MimeType};
+
+use crate::music;
 
 #[derive(Serialize)]
 pub struct Song {
     id: usize,
+    url: String,
     filename: String,
     title: String,
-    url: String
+    tags: Option<Tags>
+}
+
+#[derive(Serialize)]
+struct Tags {
+    artist: Option<String>
 }
 
 #[get("/")]
@@ -21,13 +30,32 @@ pub fn songs() -> Json<Vec<Song>> {
     let mut songs = Vec::<Song>::new();
     for (i, entry) in WalkDir::new(&music_folder).follow_links(true).max_depth(1).into_iter().enumerate() {
         let file = entry.unwrap().into_path();
+        if file.display().to_string() == music_folder {
+            continue
+        }
+
+        let tags = Tag::new().read_from_path(&file);
+        let tags: Option<Tags> = match tags {
+            Ok(tags) => {
+                Some(
+                    Tags {
+                        artist: match tags.artist() {
+                            Some(artist) => Some(artist.to_string()),
+                            None => None
+                        }
+                    }
+                )
+            },
+            Err(_) => None
+        };
 
         songs.push(
             Song {
                 id: i,
-                filename: file.file_name().unwrap().display().to_string(),
+                url: format!("{}{}", server_url, file.display().to_string().replacen(&music_folder, "", 1)),
+                filename: file.file_name().unwrap().to_str().unwrap().to_string(),
                 title: file.file_stem().unwrap().display().to_string(),
-                url: format!("{}/{}", server_url, file.display().to_string().replacen(&music_folder, "", 1))
+                tags: tags
             }
         );
     }
