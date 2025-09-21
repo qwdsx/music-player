@@ -1,4 +1,4 @@
-<main class="w-screen h-screen max-h-screen bg-black">
+<main class="w-screen min-h-screen max-h-screen bg-black">
     <!-- <audio
         *ngIf="getCurrentSong"
         id="audio"
@@ -9,7 +9,7 @@
     </audio> -->
 
     <!-- top bar -->
-    <div *ngIf="!isCurrentSongOpen" class="z-1 w-full flex flex-row items-center sticky top-0 p-2 bottom-b border-white bg-black text-white">
+    <div *ngIf="!isCurrentSongOpen" class="z-1 w-full flex flex-row items-center sticky top-0 p-2 bottom-b border-b border-stone-800 bg-black text-white">
         <input
             type="search"
             placeholder="Search..."
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Song list -->
-    <div *ngIf="!isCurrentSongOpen" class="max-h-screen overflow-x-hidden overflow-y-scroll text-nowrap bg-black">
+    <div *ngIf="!isCurrentSongOpen" class="min-h-screen overflow-x-hidden overflow-y-scroll text-nowrap bg-black">
         @for (song of getSongsSearched; track $index) {
             <p
                 class="text-white p-3 border-b border-stone-700 last:border-0"

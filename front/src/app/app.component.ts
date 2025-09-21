@@ -34,8 +34,6 @@ export class AppComponent implements OnInit {
   private currentSongIndex = signal(0);
   private _currentSong = signal<Song | null>(null);
   progress = signal(0);
-  currentTime = signal(0);
-  duration = signal(0);
   audio = document.getElementsByTagName("audio")[0];
 
   faStepBackward = faStepBackward;
@@ -51,12 +49,13 @@ export class AppComponent implements OnInit {
   isCurrentSongOpen = false;
   search = signal("");
 
-  songsSearched = computed(() =>
-    this.songs.filter(
-      (song) =>
-        song.title.toLowerCase().includes(this.search().toLowerCase())
-    )
-  );
+  songsSearched(): Song[] {
+    return this.songs.filter(song => song.title.toLowerCase().includes(this.search().toLowerCase()));
+  }
+
+  get getSongsSearched(): Song[] {
+    return (this.songsSearched().length != 0) ? this.songsSearched() : this.songs;
+  }
 
   async ngOnInit() {
     this.fetchSongs();
@@ -82,10 +81,6 @@ export class AppComponent implements OnInit {
     return (this.songs) ? this.songs : null;
   }
 
-  get getSongsSearched(): Song[] | null {
-    return (this.songsSearched().length != 0) ? this.songsSearched() : this.songs;
-  }
-
   get getCurrentSong(): Song | null {
     return (this.songs && this._currentSong) ? this._currentSong() : null;
   }
@@ -93,7 +88,6 @@ export class AppComponent implements OnInit {
   handleSearch(event: any) {
     const input = event.target as HTMLInputElement;
     this.search.set(input.value);
-    console.log(input.value);
   }
 
   handleSongSelect(song: Song) {
@@ -110,8 +104,6 @@ export class AppComponent implements OnInit {
     if (!this.audio) return;
     const duration = this.audio.duration || 1;
     const currentTime = this.audio.currentTime;
-    this.duration.set(duration);
-    this.currentTime.set(currentTime);
     this.progress.set(currentTime / duration);
   }
 
