@@ -38,7 +38,6 @@ import { ControlsCurrentComponent } from './components/controls-current/controls
 })
 export class AppComponent implements OnInit {
   state = inject(StateService);
-  isSearchFocused = signal<boolean>(false);
 
   async ngOnInit() {
     this.fetchSongs();
