@@ -38,11 +38,19 @@ import { ControlsCurrentComponent } from './components/controls-current/controls
 })
 export class AppComponent implements OnInit {
   state = inject(StateService);
+  isSearchFocused = signal<boolean>(false);
 
   async ngOnInit() {
     this.fetchSongs();
     this.initialize();
-    // window.addEventListener('keydown', this.handleKeydown.bind(this));
+    window.addEventListener('keydown', this.handleKeyDown.bind(this));
+  }
+
+  async fetchSongs() {
+    let json = await fetch(`${env.apiUrl}`)
+      .then((res) => res.json())
+      .then((json) => json);
+    this.state.songs.set(json);
   }
 
   initialize() {
@@ -52,40 +60,35 @@ export class AppComponent implements OnInit {
     this.state.audio().volume = 0.1;
   }
 
-  async fetchSongs() {
-    let json = await fetch(`${env.apiUrl}`)
-      .then((res) => res.json())
-      .then((json) => json);
-    this.state.songs.set(json);
-    console.log(this.state.songs());
+  handleKeyDown(event: KeyboardEvent) {
+    if (document.activeElement === document.querySelector('#search')) return;
+    switch (event.key) {
+      case ' ':
+        event.preventDefault();
+        this.state.handlePlayPause();
+        break;
+      case 'c':
+        event.preventDefault();
+        this.state.handlePlayPause();
+        break;
+      case 'v':
+        event.preventDefault();
+        this.state.handleNext();
+        break;
+      case 'z':
+        event.preventDefault();
+        this.state.handlePrevious();
+        break;
+      case 'q':
+        // this.increaseVolume();
+        break;
+      case 'a':
+        // this.decreaseVolume();
+        break;
+      case 'm':
+        // this.toggleMute();
+        break;
+    }
   }
 
-
-  // handleKeydown(event: KeyboardEvent) {
-  //   switch (event.key) {
-  //     case ' ':
-  //       event.preventDefault();
-  //       this.handlePlayPause();
-  //       break;
-  //     case 'c':
-  //       event.preventDefault();
-  //       this.handlePlayPause();
-  //       break;
-  //     case 'v':
-  //       // this.handleNext();
-  //       break;
-  //     case 'z':
-  //       // this.handlePrevious();
-  //       break;
-  //     case 'q':
-  //       // this.increaseVolume();
-  //       break;
-  //     case 'a':
-  //       // this.decreaseVolume();
-  //       break;
-  //     case 'm':
-  //       // this.toggleMute();
-  //       break;
-  //   }
-  // }
 }

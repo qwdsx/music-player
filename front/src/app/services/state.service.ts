@@ -10,11 +10,11 @@ export class StateService {
   currentSongIndex = signal(0);
   _currentSong = signal<Song | null>(null);
   audio = signal<HTMLAudioElement>(document.getElementsByTagName("audio")[0]);
-  search = signal("");
   isCurrentOpen = signal(false);
   duration = signal(0);
   currentTime = signal(0);
   progress = signal(0);
+  search = signal("");
 
   constructor() {}
 
@@ -48,7 +48,7 @@ export class StateService {
 
   handlePrevious() {
     this.currentSongIndex.update(
-      prev => (prev - 1 <= 0) ? this.songs.length - 1 : prev - 1
+      prev => (prev - 1 < 0) ? this.songs().length - 1 : prev - 1
     );
     this._currentSong.set(this.songs()[this.currentSongIndex()]);
     this.isPlaying.set(true);
@@ -69,9 +69,8 @@ export class StateService {
     let url = this.songs()[this.currentSongIndex()].url;
     this.audio().src = url;
 
-    // Add existing event listeners
     this.audio().addEventListener('timeupdate', this.handleUpdateProgress.bind(this));
-    // this.audio().addEventListener('ended', this.next.bind(this));
+    this.audio().addEventListener('ended', this.handleNext.bind(this));
     this.audio().addEventListener('error', () => {
       this.isPlaying.set(false);
     });
