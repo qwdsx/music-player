@@ -1,142 +1,16 @@
 <main class="w-screen min-h-screen max-h-screen bg-black">
-    <!-- <audio
-        *ngIf="getCurrentSong"
-        id="audio"
-        class="hidden"
-        [volume]="0.1"
-    >
-        <source src="{{ getCurrentSong.path }}" />
-    </audio> -->
+    <app-top-bar />
 
-    <!-- top bar -->
-    <div *ngIf="!isCurrentSongOpen" class="z-1 w-full flex flex-row items-center sticky top-0 p-2 bottom-b border-b border-stone-700 bg-black text-white">
-        <input
-            type="search"
-            placeholder="Search..."
-            (input)="handleSearch($event)"
-            class="p-3 rounded-lg text-stone-300 focus:outline-none"
-        />
-        <!-- <p class="text-stone-300">|</p> -->
-    </div>
+    <app-song-list />
 
-    <!-- Song list -->
-    <div *ngIf="!isCurrentSongOpen" class="min-h-screen overflow-x-hidden overflow-y-scroll text-nowrap bg-black">
-        @for (song of getSongsSearched; track $index) {
-            <div
-                [ngClass]="(song.id == getCurrentSong?.id) ? 'bg-stone-950' : ''"
-                class="flex flex-col gap-1 p-3 border-b border-stone-800 last:border-0"
-                (click)="handleSongSelect(song)"
-            >
-                <p class="text-white">
-                    {{ song.title }}
-                </p>
-                <p *ngIf="song.tags" class="text-stone-600 text-xs">
-                    {{ song.tags.artist }}
-                </p>
-            </div>
-        }
-    </div>
-
-
-    <!-- Progress bar -->
     <app-progress-bar
-        *ngIf="getCurrentSong"
-        [ngClass]="isCurrentSongOpen ? 'hidden' : ''"
+        *ngIf="this.state._currentSong()"
+        [ngClass]="this.state.isCurrentOpen() ? 'hidden' : ''"
         class="flex flex-row items-center sticky bottom-14 z-10 w-full overflow-hidden"
-        [progress]="progress()"
+        [progress]="this.state.progress()"
     />
 
-    <!-- Current song & small controls -->
-    <div
-        *ngIf="getCurrentSong"
-        [ngClass]="!isCurrentSongOpen
-            ?
-            'flex flex-row items-center gap-2 border-t border-white sticky bottom-0 w-full text-nowrap text-white bg-black'
-            :
-            'flex flex-row items-center gap-2 border-b border-white sticky top-0 w-full text-nowrap text-white bg-black'"
-    >
-        <div *ngIf="!isCurrentSongOpen" class="bg-black p-3 z-10">
-            @if (!isPlaying) {
-                <fa-icon class="text-2xl p-1" [icon]="faPlay" (click)="handlePlayPause()" />
-            } @else {
-                <fa-icon class="text-2xl p-1" [icon]="faPause" (click)="handlePlayPause()" />
-            }
-        </div>
+    <app-controls-bottom />
 
-        <div *ngIf="!isCurrentSongOpen" class="z-1 overflow-hidden">
-            <p *ngIf="getCurrentSong.tags" class="text-stone-600 text-xs">
-                {{ getCurrentSong.tags.artist }}
-            </p>
-            <p class="text-md">
-                {{ getCurrentSong.title }}
-            </p>
-        </div>
-        <div class="p-3 bg-black z-10 right-0 absolute">
-            @if (!isCurrentSongOpen) {
-                <fa-icon
-                    class="text-2xl p-1"
-                    [icon]="faCaretDown"
-                    (click)="handleOpenCurrentSong()"
-                />
-            } @else {
-                <fa-icon
-                    class="text-2xl p-1"
-                    [icon]="faCaretUp"
-                    (click)="handleOpenCurrentSong()"
-                />
-            }
-        </div>
-    </div>
-
-    <!-- Current song -->
-    <div>
-        <div [ngClass]="isCurrentSongOpen ? 'p-3 text-white z-20 right-0 top-0 absolute' : 'hidden'">
-            @if (!isCurrentSongOpen) {
-                <fa-icon
-                    class="text-3xl p-1"
-                    [icon]="faCaretDown"
-                    (click)="handleOpenCurrentSong()"
-                />
-            } @else {
-                <fa-icon
-                    class="text-3xl p-1"
-                    [icon]="faCaretUp"
-                    (click)="handleOpenCurrentSong()"
-                />
-            }
-        </div>
-        <div *ngIf="isCurrentSongOpen && getCurrentSong" class="flex flex-col gap-4 items-center justify-center bg-black w-full h-screen fixed top-0">
-            <div class="text-8xl text-white border rounded-xl border-stone-400 p-20">
-                <fa-icon [icon]="faMusic" />
-            </div>
-            <div class="flex flex-col gap-1 justify-center items-center">
-                <p class="text-md text-gray-400">
-                    {{ getCurrentSong.title }}
-                </p>
-                <p *ngIf="getCurrentSong.tags" class="text-stone-600 text-xs">
-                    {{ getCurrentSong.tags.artist }}
-                </p>
-            </div>
-            <!-- Current song controls -->
-            <div class="w-full flex flex-col px-8 gap-4">
-                <app-progress-bar
-                class=""
-                [progress]="progress()"
-                />
-                <div class="flex flex-row px-4 items-center justify-between text-white text-2xl">
-                    <fa-icon class="text-stone-600" [icon]="faShuffle" />
-                    <fa-icon [icon]="faStepBackward" (click)="previous()" />
-                    <div class="text-4xl">
-                        @if (!isPlaying) {
-                            <fa-icon [icon]="faPlay" (click)="handlePlayPause()" />
-                        } @else {
-                            <fa-icon [icon]="faPause" (click)="handlePlayPause()" />
-                        }
-                    </div>
-                    <fa-icon [icon]="faStepForward" (click)="next()" />
-                    <fa-icon [icon]="faBars" />
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-controls-current />
 </main>

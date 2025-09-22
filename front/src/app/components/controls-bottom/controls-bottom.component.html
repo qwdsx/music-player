@@ -1,0 +1,40 @@
+<div
+        *ngIf="this.state._currentSong()"
+        [ngClass]="!this.state.isCurrentOpen()
+            ?
+            'flex flex-row items-center gap-2 border-t border-white sticky bottom-0 w-full text-nowrap text-white bg-black'
+            :
+            'flex flex-row items-center gap-2 border-b border-white sticky top-0 w-full text-nowrap text-white bg-black'"
+    >
+        <div *ngIf="!this.state.isCurrentOpen()" class="bg-black p-3 z-10">
+            @if (!this.state.isPlaying()) {
+                <fa-icon class="text-2xl p-1" [icon]="faPlay" (click)="this.state.handlePlayPause()" />
+            } @else {
+                <fa-icon class="text-2xl p-1" [icon]="faPause" (click)="this.state.handlePlayPause()" />
+            }
+        </div>
+
+        <div *ngIf="!this.state.isCurrentOpen()" class="z-1 overflow-hidden">
+            <p class="text-md">
+                {{ this.state._currentSong()?.title }}
+            </p>
+            <p *ngIf="this.state._currentSong()?.tags" class="text-stone-600 text-xs">
+                {{ this.state._currentSong()?.tags?.artist }}
+            </p>
+        </div>
+        <div class="p-3 bg-black z-10 right-0 absolute">
+            @if (!this.state.isCurrentOpen()) {
+                <fa-icon
+                    class="text-2xl p-1"
+                    [icon]="faCaretDown"
+                    (click)="this.state.handleOpenCurrentSong()"
+                />
+            } @else {
+                <fa-icon
+                    class="text-2xl p-1"
+                    [icon]="faCaretUp"
+                    (click)="this.state.handleOpenCurrentSong()"
+                />
+            }
+        </div>
+    </div>
