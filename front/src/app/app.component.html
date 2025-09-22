@@ -9,7 +9,7 @@
     </audio> -->
 
     <!-- top bar -->
-    <div *ngIf="!isCurrentSongOpen" class="z-1 w-full flex flex-row items-center sticky top-0 p-2 bottom-b border-b border-stone-800 bg-black text-white">
+    <div *ngIf="!isCurrentSongOpen" class="z-1 w-full flex flex-row items-center sticky top-0 p-2 bottom-b border-b border-stone-700 bg-black text-white">
         <input
             type="search"
             placeholder="Search..."
@@ -24,7 +24,7 @@
         @for (song of getSongsSearched; track $index) {
             <div
                 [ngClass]="(song.id == getCurrentSong?.id) ? 'bg-stone-950' : ''"
-                class="flex flex-col gap-1 p-3 border-b border-stone-700 last:border-0"
+                class="flex flex-col gap-1 p-3 border-b border-stone-800 last:border-0"
                 (click)="handleSongSelect(song)"
             >
                 <p class="text-white">
