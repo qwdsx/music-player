@@ -24,8 +24,16 @@ MUSIC_FOLDER="<folder containing songs>"
     <img src="./assets/preview3.png" width="200px" />
 </div>
 
+### Current features:
+- Audio controls (full window & simple bottom controls)
+- Current song
+- Search
+- Song list
+- Progress bar
 
 ### TODO:
 - Song queue
 - Audio visualizer
+- Shuffle
+- Interactive progress bar (seek)
 - Spotify/Youtube/Soundcloud integration?
