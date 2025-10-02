@@ -24,3 +24,8 @@ MUSIC_FOLDER="<folder containing songs>"
     <img src="./assets/preview3.png" width="200px" />
 </div>
 
+
+### TODO:
+- Song queue
+- Audio visualizer
+- Spotify/Youtube/Soundcloud integration?
