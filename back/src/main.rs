@@ -1,23 +1,19 @@
-
 use std::env;
 use rocket::{fs::FileServer, http::Method};
 use rocket_cors::{ Cors, AllowedOrigins, CorsOptions, AllowedHeaders };
 use dotenv::*;
 
-mod music;
-use music::*;
+mod api;
 
 #[macro_use] extern crate rocket;
 fn make_cors() -> Cors {
-    let server_url_env: String = env::vars().find(|x| x.0 == "ROCKET_ADDRESS").unwrap().1;
+    let server_address: String = env::vars().find(|x| x.0 == "ROCKET_ADDRESS").unwrap().1;
     let allowed_origins = AllowedOrigins::some_exact(&[
         "http://localhost:4200",
         "http://127.0.0.1:4200",
         "http://0.0.0.0:4200",
-        &format!("http://{}:4200", server_url_env)
+        &format!("http://{}:4200", server_address)
     ]);
-
-    // let allowed_origins = AllowedOrigins::all();
 
     CorsOptions {
         allowed_origins,
@@ -38,12 +34,14 @@ fn make_cors() -> Cors {
 }
 
 #[launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
     dotenv().ok();
     let music_folder = env::vars().find(|x| x.0 == "MUSIC_FOLDER").unwrap().1;
     rocket::build()
         .configure(rocket::Config::figment())
-        .mount("/", routes![songs])
+        .mount("/", routes![
+            api::songs
+        ])
         .mount("/", FileServer::from(music_folder))
         .attach(make_cors())
 }
