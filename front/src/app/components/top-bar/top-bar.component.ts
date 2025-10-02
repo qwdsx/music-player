@@ -12,7 +12,7 @@ export class TopBarComponent {
   state = inject(StateService);
 
   handleSearch(event: any) {
-    const input = event.target as HTMLInputElement;
-    this.state.search.set(input.value);
+    const target = event.target as HTMLInputElement;
+    this.state.search.set(target.value);
   }
 }

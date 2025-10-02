@@ -1,18 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { Song } from '../types/music';
+import { Component, inject, OnInit } from '@angular/core';
 import { env } from '../environments/env';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
-  faStepBackward,
-  faStepForward,
-  faPlay,
-  faPause,
-  faShuffle,
-  faBars,
-  faCaretDown,
-  faCaretUp,
-  faMusic
-} from '@fortawesome/free-solid-svg-icons';
 import { NgIf, NgClass } from '@angular/common';
 import { ProgressBarComponent } from "./components/progress-bar/progress-bar.component";
 import { StateService } from './services/state.service';
@@ -24,7 +11,6 @@ import { ControlsCurrentComponent } from './components/controls-current/controls
 @Component({
   selector: 'app-root',
   imports: [
-    FontAwesomeModule,
     NgIf,
     NgClass,
     ProgressBarComponent,

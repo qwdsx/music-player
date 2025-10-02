@@ -5,12 +5,8 @@
             class="flex flex-col gap-1 p-3 border-b border-stone-800 last:border-0"
             (click)="handleSongSelect(song)"
         >
-            <p class="text-white">
-                {{ song.title }}
-            </p>
-            <p *ngIf="song.tags" class="text-stone-600 text-xs">
-                {{ song.tags.artist }}
-            </p>
+            <p class="text-white">{{ song.title }}</p>
+            <p *ngIf="song.tags" class="text-stone-600 text-xs">{{ song.tags.artist }}</p>
         </div>
     }
 </div>
